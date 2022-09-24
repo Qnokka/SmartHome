@@ -1,12 +1,17 @@
 package com.example.smarthome0807;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -15,12 +20,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.service.controls.Control;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,12 +47,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private String url = "http://10.0.2.2:8081";
+    private Button m_btnAlert; //팝업 알림창 추가코드1
     private TextView textViewResult;
     private TextView textViewResult2;
     private TextView textViewResult3;
     private TextView textViewResult4;
 
-    //인성씨 얼굴 보여주세요
+    //추가
+    BottomNavigationView bottomNavigationView;
+    Fragment1 fragment1;
+    Fragment2 fragment2;
+    Fragment3 fragment3;
+    
+    //context, editText 변수 추가
+    public static Context context_main;
+    public EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +69,58 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //res-layout-activity_main을 실행
 
+        //context 추가
+        context_main = this;
+
+        //추가
+        bottomNavigationView = findViewById(R.id.btm_navi);
+
+        //프래그먼트 생성
+        fragment1 = new Fragment1();
+        fragment2 = new Fragment2();
+        fragment3 = new Fragment3();
+
+        //제일 처음 띄워줄 뷰를 세팅해줍니다. commit();까지 해줘야 합니다.
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag_frame, fragment1).commitAllowingStateLoss();
+        //bottomnavigationview의 아이콘을 선택 했을때 원하는 프래그먼트가 띄워질 수 있도록 리스너를 추가합니다.
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
+                    case R.id.tab1: {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_frame, fragment1).commitAllowingStateLoss();
+                        return true;
+                    }
+
+                    case R.id.tab2: {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_frame, fragment2).commitAllowingStateLoss();
+                        return true;
+                    }
+
+                    case R.id.tab3: {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_frame, fragment3).commitAllowingStateLoss();
+                        return true;
+                    }
+
+                    default:
+                        return false;
+
+                }
+            }
+        });
+
         textViewResult = findViewById(R.id.textView);
         textViewResult2 = findViewById(R.id.textView2);
         textViewResult3 = findViewById(R.id.textView3);
         textViewResult4 = findViewById(R.id.textView4);
+        editText = findViewById(R.id.editText);
 
         Timer timer = new Timer();
-        TimerTask tt = new TimerTask(){
+        TimerTask tt = new TimerTask() {
             @Override
             public void run() {
 
@@ -68,17 +131,17 @@ public class MainActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit1.create(JsonPlaceHolderApi.class);
-                Call<Map<String,Float>> call = jsonPlaceHolderApi.getPosts();
+                Call<Map<String, Float>> call = jsonPlaceHolderApi.getPosts();
                 call.enqueue(new Callback<Map<String, Float>>() {
                     @Override
-                    public void onResponse(Call<Map<String,Float>> call, Response<Map<String,Float>> response) {
+                    public void onResponse(Call<Map<String, Float>> call, Response<Map<String, Float>> response) {
                         //System.out.println(response.body().toString());
                         if (!response.isSuccessful()) {
                             textViewResult.setText("Code: " + response.code());
                             return;
                         }
 
-                        Map<String,Float> posts = new HashMap<>();
+                        Map<String, Float> posts = new HashMap<>();
                         posts = response.body();
                         String content = "";
 
@@ -89,34 +152,38 @@ public class MainActivity extends AppCompatActivity {
                         content += "\n" + posts.get("API_temp") + "°C" + " / " + posts.get("API_humid") + "%";
                         textViewResult2.append(content);
                         content = "";
-                        if(posts.get("pmGrade").intValue() == 1){//실내 미세먼지 등급
+                        if (posts.get("pmGrade").intValue() == 1) {//실내 미세먼지 등급
                             content += "\n" + "좋음 / " + posts.get("pm") + "㎍/㎥";
-                        }else if(posts.get("pmGrade").intValue() == 2){
+                        } else if (posts.get("pmGrade").intValue() == 2) {
                             content += "\n" + "보통 / " + posts.get("pm") + "㎍/㎥";
-                        }else if(posts.get("pmGrade").intValue() == 3){
+                        } else if (posts.get("pmGrade").intValue() == 3) {
                             content += "\n" + "나쁨 / " + posts.get("pm") + "㎍/㎥";
-                        }else if(posts.get("pmGrade").intValue() == 4){
+                        } else if (posts.get("pmGrade").intValue() == 4) {
                             content += "\n" + "매우 나쁨 / " + posts.get("pm") + "㎍/㎥";
-                        }else{
+                        } else {
                             content += "\n" + "등급 산정 중 / " + posts.get("pm") + "㎍/㎥";
                         }
                         textViewResult3.append(content);
                         content = "";
-                        if(posts.get("API_PMGrade").intValue() == 1){
+                        if (posts.get("API_PMGrade").intValue() == 1) {
                             content += "\n" + "좋음 / " + posts.get("API_PM") + "㎍/㎥";
-                        }else if(posts.get("API_PMGrade").intValue() == 2){
+                            //showAlertDialog();
+                            Fragment1 mf = (Fragment1) getSupportFragmentManager().findFragmentById(R.id.frag_frame);
+                            mf.showAlertDialog();
+                        } else if (posts.get("API_PMGrade").intValue() == 2) {
                             content += "\n" + "보통 / " + posts.get("API_PM") + "㎍/㎥";
-                        }else if(posts.get("API_PMGrade").intValue() == 3){
+                        } else if (posts.get("API_PMGrade").intValue() == 3) {
                             content += "\n" + "나쁨 / " + posts.get("API_PM") + "㎍/㎥";
-                            showDusty(); //미세먼지 나쁨일 경우, 경고 알림 (상단바)
-                        }else if(posts.get("API_PMGrade").intValue() == 4){
+                            //showDusty(); //미세먼지 나쁨일 경우, 경고 알림 (상단바)
+                        } else if (posts.get("API_PMGrade").intValue() == 4) {
                             content += "\n" + "매우 나쁨 / " + posts.get("pm") + "㎍/㎥";
-                            showDusty(); //미세먼지 나쁨일 경우, 경고 알림 (상단바)
-                        }else{
+                            //showDusty(); //미세먼지 나쁨일 경우, 경고 알림 (상단바)
+                        } else {
                             content += "\n" + "등급 산정 중 / " + posts.get("API_PM") + "㎍/㎥";
                         }
                         textViewResult4.append(content);
                     }
+
                     //DB 읽어오는 구문 (실내외 온습도 및 미세먼지 정보)
                     @Override
                     public void onFailure(Call<Map<String, Float>> call, Throwable t) {
@@ -129,11 +196,9 @@ public class MainActivity extends AppCompatActivity {
                 textViewResult4.setText("실외 미세먼지");
             }
         };
-        timer.schedule(tt,0,3000000);
+        timer.schedule(tt, 0, 3000000);
 
     }//end of onCreate() Method
-
-
 
     //On 버튼 클릭 시 호출되는 함수
     public void windowController(View view) {
@@ -228,8 +293,8 @@ public class MainActivity extends AppCompatActivity {
                             if (!response.isSuccessful()) {
                                 //String i = "OK";
                                 //editText.setText(i);
-                                editText.setText(String.valueOf(response.code()));
-                                //Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
+                                //editText.setText(String.valueOf(response.code()));
+                                Toast.makeText(getApplicationContext(), "냉난방기는 동시 운용 불가합니다", Toast.LENGTH_LONG).show();
                                 return;
                             }
                             ResponseBody result;
@@ -286,8 +351,8 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println(response.message());
 
                             if (!response.isSuccessful()) {
-                                editText.setText(String.valueOf(response.code()));
-                                //Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
+                                //editText.setText(String.valueOf(response.code()));
+                                Toast.makeText(getApplicationContext(), "냉난방기는 동시 운용 불가합니다", Toast.LENGTH_LONG).show();
                                 return;
                             }
                             ResponseBody result;
@@ -452,10 +517,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end of doorController() Method
 
-
+    ControlHome controlHome = new ControlHome();
 
     //Off 버튼 클릭 시 호출되는 함수
     public void windowOff(View view) {
+        controlHome.windowOff(view);
+    }
+    public void windowOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         ControlDataInfo controlDataInfo = new ControlDataInfo();
 
@@ -498,6 +566,9 @@ public class MainActivity extends AppCompatActivity {
     }//end of windowOff() Method
 
     public void heaterOff(View view) {
+        controlHome.heaterOff(view);
+    }
+    public void heaterOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         ControlDataInfo controlDataInfo = new ControlDataInfo();
 
@@ -538,7 +609,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end of heaterOff() Method
 
-    public void acOff(View view) {
+    public void acOff(View view){
+        controlHome.acOff(view);
+    }
+    public void acOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         ControlDataInfo controlDataInfo = new ControlDataInfo();
 
@@ -579,7 +653,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end of acOff() Method
 
-    public void AirOff(View view) {
+    public void AirOff(View view){
+        controlHome.AirOff(view);
+    }
+    public void AirOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         ControlDataInfo controlDataInfo = new ControlDataInfo();
 
@@ -620,7 +697,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end of AirOff() Method 공기
 
-    public void fanOff(View view) {
+    public void fanOff(View view){
+        controlHome.fanOff(view);
+    }
+    public void fanOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         ControlDataInfo controlDataInfo = new ControlDataInfo();
 
@@ -661,7 +741,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end of fanOff() Method 환기
 
-    public void doorOff(View view) {
+    public void doorOff(View view){
+        controlHome.doorOff(view);
+    }
+    public void doorOff2(View view) {
         //Onclick Method (JSON 데이터 송신)
         EditText editText = (EditText)findViewById(R.id.editText);
         String text = editText.getText().toString().trim();
@@ -713,52 +796,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }//end of doorOff() Method
-
-
-
-    //미세먼지 경고 알림 수행 함수
-    public void showDusty() {
-        //미세먼지 경고 알림
-
-        //알림(Notification)을 관리하는 관리자 객체를 운영체제(Context)로부터 소환하기
-        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        //Notification 객체를 생성해주는 건축가객체 생성(AlertDialog 와 비슷)
-        NotificationCompat.Builder builder= null;
-
-        //Oreo 버전(API26 버전)이상에서는 알림시에 NotificationChannel 이라는 개념이 필수 구성요소가 됨.
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-            String channelID="channel_01"; //알림채널 식별자
-            String channelName="MyChannel01"; //알림채널의 이름
-
-            //알림채널 객체 만들기
-            NotificationChannel channel= new NotificationChannel(channelID,channelName,NotificationManager.IMPORTANCE_DEFAULT);
-            //알림매니저에게 채널 객체의 생성을 요청
-            notificationManager.createNotificationChannel(channel);
-            //객체 생성
-            builder=new NotificationCompat.Builder(this, channelID);
-
-        }else{
-            builder= new NotificationCompat.Builder(this, (Notification) null);
-        }
-
-        //원하는 알림의 설정작업
-        builder.setSmallIcon(android.R.drawable.ic_menu_view);
-
-        //알림창(확장 상태바)의 설정
-        builder.setContentTitle("경고 알림");//알림창 제목
-        builder.setContentText("미세먼지 수치가 나쁨입니다.");//알림창 내용
-
-        Bitmap bm= BitmapFactory.decodeResource(getResources(), R.drawable.window);
-        builder.setLargeIcon(bm); //매개변수가 Bitmap을 줘야한다.
-
-        //건축가에게 알림 객체 생성하도록
-        Notification notification=builder.build();
-
-        //알림매니저에게 알림(Notify) 요청
-        notificationManager.notify(1, notification);
-
-    }//end of showDusty() Method
 
 }
