@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import com.example.smarthome0807.DTO.Users;
+//요건 변한 겁니다
 
 public class activity_join extends AppCompatActivity {
 
