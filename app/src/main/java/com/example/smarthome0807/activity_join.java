@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.example.smarthome0807.DTO.Users;
-//요건 변한 겁니다
+
+import java.util.regex.Pattern;
 
 public class activity_join extends AppCompatActivity {
 
@@ -32,17 +37,22 @@ public class activity_join extends AppCompatActivity {
         join_adr = findViewById(R.id.join_adr);
         join_key = findViewById(R.id.join_key);
 
+        String UserId = join_id.getText().toString();
+        String UserPw = join_pw.getText().toString();
+        String UserName = join_name.getText().toString();
+        String UserApt = join_apt.getText().toString();
+        String UserAdr = join_adr.getText().toString();
+        String UserKey = join_key.getText().toString();
+
+        join_name.setFilters(new InputFilter[] { filterKor });
+        join_apt.setFilters(new InputFilter[] { filterKor });
+        join_adr.setFilters(new InputFilter[] { filterKor });
+
         //회원가입 버튼 클릭 시 수행
         join_yes = findViewById(R.id.join_yes);
         join_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String UserId = join_id.getText().toString();
-                String UserPw = join_pw.getText().toString();
-                String UserName = join_name.getText().toString();
-                String UserApt = join_apt.getText().toString();
-                String UserAdr = join_adr.getText().toString();
-                String UserKey = join_key.getText().toString();
 
                 //한 칸이라도 입력 안했을 경우
                 if
@@ -53,9 +63,6 @@ public class activity_join extends AppCompatActivity {
                     dialog.show();
                     return;
                 }//end of 한 칸 입력 방지
-
-                Users users = new Users();
-
             }
         });
 
@@ -68,5 +75,21 @@ public class activity_join extends AppCompatActivity {
                 startActivity(intent);
             }
         });//end of 뒤로가기 버튼 onClick() 메소드
+
     }
+
+    //한국어만 입력 받도록 하는 메소드
+    public InputFilter filterKor = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[ㄱ-ㅎ가-힣]*$");
+            if(!ps.matcher(source).matches()) {
+                String msg = "한국어만 입력 가능합니다. 다시 입력해주세요.";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                return "";
+            }
+            return null;
+        }
+    };
+    //end of inputFilterKor
 }
