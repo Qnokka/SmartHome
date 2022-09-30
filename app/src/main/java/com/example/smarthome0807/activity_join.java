@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
 import com.example.smarthome0807.DTO.Users;
 
 public class activity_join extends AppCompatActivity {

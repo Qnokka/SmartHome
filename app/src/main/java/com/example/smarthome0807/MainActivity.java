@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import com.example.smarthome0807.DAO.Fragment1;
 import com.example.smarthome0807.DAO.Fragment2;
 import com.example.smarthome0807.DAO.Fragment3;
