@@ -1,4 +1,4 @@
-package com.example.smarthome0807;
+package com.example.smarthome0807.DTO;
 
 public class Users {
     private String id;

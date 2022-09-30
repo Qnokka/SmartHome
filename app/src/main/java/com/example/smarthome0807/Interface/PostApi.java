@@ -1,8 +1,7 @@
-package com.example.smarthome0807;
+package com.example.smarthome0807.Interface;
 
-import org.json.JSONObject;
+import com.example.smarthome0807.DTO.ControlDataInfo;
 
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
