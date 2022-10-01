@@ -20,18 +20,19 @@
             android:layout_marginTop="16dp">
 
             <ImageButton
-                android:id="@+id/backBtn"
+                android:id="@+id/backBtnSet"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
                 android:background="@color/white"
                 app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
             <TextView
-                android:id="@+id/memInsert"
+                android:id="@+id/UsersInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:text="회원가입"
                 android:textSize="24sp"
@@ -53,7 +54,7 @@
                     android:hint="아이디"
                     android:inputType="textPersonName"
                     android:minHeight="48dp"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
 
                 <Button
@@ -61,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="중복확인" />
+                    android:text="중복확인"/>
 
             </LinearLayout>
 
@@ -115,7 +116,8 @@
                 android:hint="상세주소 (단지명, 동, 호수)"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <EditText
                 android:id="@+id/join_key"
@@ -123,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:ems="15"
                 android:gravity="left"
                 android:hint="인증키"
@@ -134,14 +137,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/join_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="48dp"
                     android:ems="10"
                     android:text="가입"
                     android:textSize="18sp" />
