@@ -92,7 +92,8 @@ public class Fragment_home extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit1.create(JsonPlaceHolderApi.class);
-                Call<Map<String, Float>> call = jsonPlaceHolderApi.getPosts();
+                Call<Map<String, Float>> call = jsonPlaceHolderApi.getPosts("baekkoji");
+                // id 임의로!
                 call.enqueue(new Callback<Map<String, Float>>() {
                     @Override
                     public void onResponse(Call<Map<String, Float>> call, Response<Map<String, Float>> response) {

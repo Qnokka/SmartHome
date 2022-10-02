@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface JsonPlaceHolderApi {
     @GET("/api/main/getDatas")
-    Call<Map<String,Float>> getPosts();
+    Call<Map<String,Float>> getPosts(@Body String UserId);
 }
