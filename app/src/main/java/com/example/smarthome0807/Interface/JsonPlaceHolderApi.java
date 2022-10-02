@@ -1,13 +1,12 @@
 package com.example.smarthome0807.Interface;
 
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface JsonPlaceHolderApi {
-    @GET("/api/main/getDatas")
-    Call<Map<String,Float>> getPosts(@Body String UserId);
+    @POST("/api/main/getDatas")
+    Call<Map<String,String>> getPosts(@Body String UserId);
 }

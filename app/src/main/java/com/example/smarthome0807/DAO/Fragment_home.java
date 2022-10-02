@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,11 +93,11 @@ public class Fragment_home extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit1.create(JsonPlaceHolderApi.class);
-                Call<Map<String, Float>> call = jsonPlaceHolderApi.getPosts("baekkoji");
+                Call<Map<String, String>> call = jsonPlaceHolderApi.getPosts("baekkoji");
                 // id 임의로!
-                call.enqueue(new Callback<Map<String, Float>>() {
+                call.enqueue(new Callback<Map<String, String>>() {
                     @Override
-                    public void onResponse(Call<Map<String, Float>> call, Response<Map<String, Float>> response) {
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                         //System.out.println(response.body().toString());
                         if (!response.isSuccessful()) {
                             String msg = "Error" + response.code();
@@ -105,7 +106,7 @@ public class Fragment_home extends Fragment {
                             return;
                         }
 
-                        Map<String, Float> posts = new HashMap<>();
+                        Map<String, String> posts = new HashMap<>();
 
                         posts = response.body();
                         String content = "";
@@ -126,42 +127,43 @@ public class Fragment_home extends Fragment {
                         content += posts.get("API_humid") + "%";
                         outHumid.append(content);
 
+
                         content ="";
                         content+=posts.get("pop")+"%"; //강수확률
                         outRain.append(content);
-                        
+
                         content="";
-                        if(posts.get("sky") >= 0 && posts.get("sky") <= 5){ //하늘 상태 전운량
+                        if(Integer.parseInt(posts.get("sky")) >= 0 && Integer.parseInt(posts.get("sky")) <= 5){ //하늘 상태 전운량
                             content+="맑음";
                             cast.setImageResource(R.drawable.sun);
-                        }else if(posts.get("sky") >= 6 && posts.get("sky") <= 8){
+
+                        }else if(Integer.parseInt(posts.get("sky")) >= 6 && Integer.parseInt(posts.get("sky")) <= 8){
                             content+="구름 많음";
                             cast.setImageResource(R.drawable.cloud);
-                        }else if(posts.get("sky") >= 9 && posts.get("sky") <= 10){
+                        }else if(Integer.parseInt(posts.get("sky")) >= 9 && Integer.parseInt(posts.get("sky")) <= 10){
                             content+="흐림";
                             cast.setImageResource(R.drawable.blur);
                         }
                         outWeather.append(content);
 
+
                         content = "";
-                        if (posts.get("pmGrade").intValue() == 1) {//실내 미세먼지 등급
+                        if (Integer.parseInt(posts.get("pmGrade")) == 1) {//실내 미세먼지 등급
                             content += "좋음";
                             content2+= posts.get("pm") + "㎍/㎥";
                             dust.setImageResource(R.drawable.good);
-                        } else if (posts.get("pmGrade").intValue() == 2) {
+                        } else if (Integer.parseInt(posts.get("pmGrade")) == 2) {
                             content += "보통";
                             content2+= posts.get("pm") + "㎍/㎥";
                             dust.setImageResource(R.drawable.soso);
-                        } else if (posts.get("pmGrade").intValue() == 3) {
+                        } else if (Integer.parseInt(posts.get("pmGrade")) == 3) {
                             content += "나쁨";
                             content2+= posts.get("pm") + "㎍/㎥";
                             dust.setImageResource(R.drawable.bad);
-                            //showAlertDialog();
-                        } else if (posts.get("pmGrade").intValue() == 4) {
+                        } else if (Integer.parseInt(posts.get("pmGrade")) == 4) {
                             content += "매우 나쁨";
                             content2+= posts.get("pm") + "㎍/㎥";
                             dust.setImageResource(R.drawable.very_bad);
-                            //showAlertDialog();
                         } else {
                             content += "등급 산정 중";
                             content2+= posts.get("pm") + "㎍/㎥";
@@ -172,20 +174,20 @@ public class Fragment_home extends Fragment {
 
                         content = "";
                         content2 = "";
-                        if (posts.get("API_PMGrade").intValue() == 1) {//실외 미세먼지 등급
+                        if (Integer.parseInt(posts.get("API_PMGrade")) == 1) {//실외 미세먼지 등급
                             content += "좋음";
                             content2+= posts.get("API_PM") + "㎍/㎥";
 
 
-                        } else if (posts.get("API_PMGrade").intValue() == 2) {
+                        } else if (Integer.parseInt(posts.get("API_PMGrade")) == 2) {
                             content += "보통";
                             content2+= posts.get("API_PM") + "㎍/㎥";
 
-                        } else if (posts.get("API_PMGrade").intValue() == 3) {
+                        } else if (Integer.parseInt(posts.get("API_PMGrade")) == 3) {
                             content += "나쁨";
                             content2+= posts.get("API_PM") + "㎍/㎥";
                             showAlertDialog();
-                        } else if (posts.get("API_PMGrade").intValue() == 4) {
+                        } else if (Integer.parseInt(posts.get("API_PMGrade")) == 4) {
                             content += "매우 나쁨";
                             content2+= posts.get("pm") + "㎍/㎥";
                             showAlertDialog();
@@ -196,16 +198,16 @@ public class Fragment_home extends Fragment {
                         outPm10.append(content);
                         outPm25.append(content2);
 
-                        //사용자 구 얻어오는 구문 (null)
-                        content = "";
-                        content += posts.get("address");
+                        //사용자 구 얻어오는 구문
+                        content = posts.get("address");
+                        Log.d("result", "값 :"+content);
                         local.append(content);
                         local2.append(content);
                     }
                     //DB 읽어오는 구문 (실내외 온습도 및 미세먼지 정보)
 
                     @Override
-                    public void onFailure(Call<Map<String, Float>> call, Throwable t) {
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
                         outPm10.setText(t.getMessage());
                     }
                 });
