@@ -8,5 +8,5 @@ import retrofit2.http.POST;
 
 public interface CheckIDApi {
     @POST("/api/users/idCheck")
-    Call<ResponseBody> getResult(@Body String userId);
+    Call<Integer> getResult(@Body String userId);
 }

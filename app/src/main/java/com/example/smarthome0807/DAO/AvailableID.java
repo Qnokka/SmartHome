@@ -1,12 +1,8 @@
 package com.example.smarthome0807.DAO;
 
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.example.smarthome0807.Interface.CheckIDApi;
-import com.example.smarthome0807.activity_join;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,20 +22,19 @@ public class AvailableID {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             CheckIDApi checkIDApi = retrofit2.create(CheckIDApi.class);
-            Call<ResponseBody> call1 = checkIDApi.getResult(userId);
-            call1.enqueue(new Callback<ResponseBody>() {
+            Call<Integer> call1 = checkIDApi.getResult(userId);
+            call1.enqueue(new Callback<Integer>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
                     boolean rs = true;
-                    Log.i("result", call.toString());
-                    Log.i("result", response.body().toString());
+                    Log.i("result", response.message());
                     if ( response.body().equals("true")) {
                         result = true;
                     }
                 }
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.i("result", "실패");
                 }
             });
         } catch (Exception e) {
