@@ -4,17 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.example.smarthome0807.DAO.Fragment1;
-import com.example.smarthome0807.DAO.Fragment2;
-import com.example.smarthome0807.DAO.Fragment3;
+import com.example.smarthome0807.DAO.Fragment_control;
+import com.example.smarthome0807.DAO.Fragment_home;
+import com.example.smarthome0807.DAO.Fragment_settings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    Fragment1 fragment1;
-    Fragment2 fragment2;
-    Fragment3 fragment3;
+    Fragment_control fragment1;
+    Fragment_home fragment2;
+    Fragment_settings fragment3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         //하단 메뉴바 선언
         bottomNavigationView = findViewById(R.id.btm_navi);
         //프래그먼트 생성
-        fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
-        fragment3 = new Fragment3();
+        fragment1 = new Fragment_control();
+        fragment2 = new Fragment_home();
+        fragment3 = new Fragment_settings();
 
         //뷰 세팅
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_frame, fragment1).commitAllowingStateLoss();

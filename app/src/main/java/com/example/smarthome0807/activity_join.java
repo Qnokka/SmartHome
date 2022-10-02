@@ -45,7 +45,7 @@ public class activity_join extends AppCompatActivity {
         join_adr = findViewById(R.id.join_adr);
         join_key = findViewById(R.id.join_key);
         
-        //한국어 입력 필터 적용
+        //입력 필터 적용
         join_name.setFilters(new InputFilter[] { filterKor });
         join_apt.setFilters(new InputFilter[] { filterKor });
         join_adr.setFilters(new InputFilter[] { filterKor });
@@ -91,7 +91,7 @@ public class activity_join extends AppCompatActivity {
 
     }
 
-    //한국어만 입력 받도록 하는 메소드
+    //영문 입력 제한 메소드
     public InputFilter filterKor = new InputFilter() {
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -139,6 +139,9 @@ public class activity_join extends AppCompatActivity {
                         if(result != null){
                             //String msg = UserId+"\n"+UserPw+"\n"+UserName+"\n"+UserApt+"\n"+UserAdr+"\n"+UserKey;
                             Toast.makeText(getApplicationContext(), "회원가입 성공!", Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(getApplicationContext(),activity_login.class);
+                            startActivity(intent);
 
                         }else{
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
