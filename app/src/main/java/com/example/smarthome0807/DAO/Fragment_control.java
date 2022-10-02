@@ -26,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Fragment1 extends Fragment {
+public class Fragment_control extends Fragment {
     ViewGroup viewGroup;
 
     private String url = "http://10.0.2.2:8081";
@@ -40,7 +40,7 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_1, container, false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.control_fragment, container, false);
 
         Context c = viewGroup.getContext();
         EditText editText = (EditText) viewGroup.findViewById(R.id.editTextNumber1); //창문 각도

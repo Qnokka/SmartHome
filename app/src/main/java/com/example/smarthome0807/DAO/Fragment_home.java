@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Fragment2 extends Fragment {
+public class Fragment_home extends Fragment {
     ViewGroup viewGroup;
     private String url = "http://10.0.2.2:8081";
 
@@ -60,7 +60,7 @@ public class Fragment2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_2,container,false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.home_fragment,container,false);
 
         outPm10 = viewGroup.findViewById(R.id.outPM10);
         outPm25 = viewGroup.findViewById(R.id.outPM25);

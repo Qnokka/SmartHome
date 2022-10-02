@@ -18,7 +18,7 @@ public class activity_join extends AppCompatActivity {
 
     private String url = "http://10.0.2.2:8081";
     private EditText join_id, join_pw, join_name, join_apt, join_adr, join_key;
-    private Button join_yes,checkId;
+    private Button join_yes, checkId;
     private AlertDialog dialog;
     private String UserId = "";
 
@@ -40,11 +40,14 @@ public class activity_join extends AppCompatActivity {
         checkId = findViewById(R.id.userIdCheck);
         checkId.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                IdMinimum5();
+            public void onClick(View v) { // 중복체크
                 UserId = join_id.getText().toString();
+                if (IdMinimum5(UserId)) {
+                    return;
+                }
+
                 AvailableID availableId = new AvailableID();
-                if(!availableId.checkAvailableId(UserId)){ //중복될 경우
+                if (availableId.checkAvailableId(UserId)) { //중복될 경우
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity_join.this);
                     dialog = builder.setMessage("아이디가 중복되었습니다.").setNegativeButton("재입력", null).create();
                     dialog.show();
@@ -59,7 +62,7 @@ public class activity_join extends AppCompatActivity {
         join_yes = findViewById(R.id.join_yes);
         join_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 회원가입 버튼
                 UserId = join_id.getText().toString();
                 String UserPw = join_pw.getText().toString();
                 String UserName = join_name.getText().toString();
@@ -68,11 +71,12 @@ public class activity_join extends AppCompatActivity {
                 String UserKey = join_key.getText().toString();
 
                 // id 제약조건 : 5글자 이상.
-                IdMinimum5();
+                if (IdMinimum5(UserId)) {
+                    return;
+                }
 
                 //한 칸이라도 입력 안했을 경우
-                if (UserId.equals("") || UserPw.equals("") || UserName.equals("") || UserApt.equals("")|| UserAdr.equals("")|| UserKey.equals(""))
-                {
+                if (UserId.equals("") || UserPw.equals("") || UserName.equals("") || UserApt.equals("") || UserAdr.equals("") || UserKey.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity_join.this);
                     dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
                     dialog.show();
@@ -95,21 +99,20 @@ public class activity_join extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),activity_login.class);
+                Intent intent = new Intent(getApplicationContext(), activity_login.class);
                 startActivity(intent);
             }
         });//end of 뒤로가기 버튼 onClick() 메소드
     }
 
-    protected void IdMinimum5(){
+    protected boolean IdMinimum5(String UserId) {
         //ID 5글자 미만일 경우
-        String result="";
-        if(UserId.length()<4) {
+        if (UserId.length() < 5) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity_join.this);
             dialog = builder.setMessage("아이디를 영문  5글자 이상 입력해주세요").setNegativeButton("확인", null).create();
             dialog.show();
-            return;
+            return true;
         }
+        return false;
     }
 }
-
