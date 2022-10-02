@@ -32,5 +32,4 @@
         android:background="#fff"
         app:itemIconSize="24dp"/>
 
-
 </RelativeLayout>
