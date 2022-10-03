@@ -1,4 +1,4 @@
-package com.example.smarthome0807.DTO;
+package com.example.ComeHome.DTO;
 
 public class HomeDataInfo {
     private String id;

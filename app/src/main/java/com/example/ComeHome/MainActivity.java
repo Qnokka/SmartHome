@@ -1,12 +1,12 @@
-package com.example.smarthome0807;
+package com.example.ComeHome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.example.smarthome0807.DAO.Fragment_control;
-import com.example.smarthome0807.DAO.Fragment_home;
-import com.example.smarthome0807.DAO.Fragment_settings;
+import com.example.ComeHome.DAO.Fragment_control;
+import com.example.ComeHome.DAO.Fragment_home;
+import com.example.ComeHome.DAO.Fragment_settings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

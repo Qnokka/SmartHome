@@ -1,4 +1,4 @@
-package com.example.smarthome0807;
+package com.example.ComeHome;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -59,4 +59,5 @@ public class activity_login extends AppCompatActivity {
             }
         });
     }
+
 }

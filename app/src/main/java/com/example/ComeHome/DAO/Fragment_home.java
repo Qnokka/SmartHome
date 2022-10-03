@@ -1,4 +1,4 @@
-package com.example.smarthome0807.DAO;
+package com.example.ComeHome.DAO;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smarthome0807.Interface.JsonPlaceHolderApi;
-import com.example.smarthome0807.R;
+import com.example.ComeHome.Interface.JsonPlaceHolderApi;
+import com.example.ComeHome.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

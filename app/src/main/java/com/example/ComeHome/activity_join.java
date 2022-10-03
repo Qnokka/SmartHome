@@ -1,4 +1,4 @@
-package com.example.smarthome0807;
+package com.example.ComeHome;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.smarthome0807.DTO.Users;
-import com.example.smarthome0807.Interface.CheckIDApi;
-import com.example.smarthome0807.Interface.UserJoinApi;
+import com.example.ComeHome.DTO.Users;
+import com.example.ComeHome.Interface.CheckIDApi;
+import com.example.ComeHome.Interface.UserJoinApi;
 
 import java.util.regex.Pattern;
 

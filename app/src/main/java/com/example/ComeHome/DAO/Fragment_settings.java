@@ -1,4 +1,4 @@
-package com.example.smarthome0807.DAO;
+package com.example.ComeHome.DAO;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.smarthome0807.R;
-import com.example.smarthome0807.activity_login;
+import com.example.ComeHome.R;
+import com.example.ComeHome.activity_login;
 
 public class Fragment_settings extends Fragment {
     ViewGroup viewGroup;

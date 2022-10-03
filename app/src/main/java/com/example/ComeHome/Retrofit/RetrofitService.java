@@ -1,7 +1,7 @@
-package com.example.smarthome0807.Retrofit;
+package com.example.ComeHome.Retrofit;
 
-import com.example.smarthome0807.Interface.JsonPlaceHolderApi;
-import com.example.smarthome0807.Interface.PostApi;
+import com.example.ComeHome.Interface.JsonPlaceHolderApi;
+import com.example.ComeHome.Interface.PostApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

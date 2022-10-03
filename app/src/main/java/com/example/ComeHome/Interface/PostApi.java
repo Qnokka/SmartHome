@@ -1,6 +1,6 @@
-package com.example.smarthome0807.Interface;
+package com.example.ComeHome.Interface;
 
-import com.example.smarthome0807.DTO.ControlDataInfo;
+import com.example.ComeHome.DTO.ControlDataInfo;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
