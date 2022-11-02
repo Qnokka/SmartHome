@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ComeHome.R;
+import com.example.ComeHome.activity_delete;
+import com.example.ComeHome.activity_edit;
 import com.example.ComeHome.activity_login;
 
 public class Fragment_settings extends Fragment {
@@ -21,14 +23,12 @@ public class Fragment_settings extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.settings_fragment,container,false);
+        viewGroup = (ViewGroup)inflater.inflate(R.layout.settings_fragment, container,false);
 
-        //로그아웃 버튼 - 화면 이동
         Button btn = (Button) viewGroup.findViewById(R.id.logout);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), activity_login.class);
                 //fragment라서 activity intent와는 다른 방식
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -36,6 +36,25 @@ public class Fragment_settings extends Fragment {
             }
         });
 
+        Button btn2 = (Button) viewGroup.findViewById(R.id.UsersInfoEdit);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), activity_edit.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+
+        Button btn3 = (Button) viewGroup.findViewById(R.id.UsersInfoDel);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), activity_delete.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
         return viewGroup;
     }
 }

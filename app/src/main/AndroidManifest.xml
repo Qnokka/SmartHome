@@ -17,13 +17,13 @@
         android:theme="@style/Theme.ComeHome"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
-            android:name="com.example.ComeHome.activity_join">
-        </activity>
-
+            android:name=".activity_delete"
+            android:exported="false" />
+        <activity android:name=".activity_edit" />
+        <activity android:name=".activity_join" />
         <activity
-            android:name="com.example.ComeHome.activity_login"
+            android:name=".activity_login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.example.ComeHome.MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

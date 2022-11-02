@@ -96,17 +96,6 @@ public class activity_join extends AppCompatActivity {
                 }
             }
         });
-
-        //뒤로가기 버튼 - 화면 이동
-        ImageButton imageButton = (ImageButton) findViewById(R.id.backBtnSet);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),activity_login.class);
-                startActivity(intent);
-            }
-        });//end of 뒤로가기 버튼 onClick() 메소드
-
     }
 
     //ID 5자 이상 여부 체크
@@ -209,7 +198,6 @@ public class activity_join extends AppCompatActivity {
                         ResponseBody result;
                         result = response.body();
                         if(result != null){
-                            //String msg = UserId+"\n"+UserPw+"\n"+UserName+"\n"+UserApt+"\n"+UserAdr+"\n"+UserKey;
                             Toast.makeText(getApplicationContext(), "회원가입 성공!", Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(getApplicationContext(),activity_login.class);

@@ -93,7 +93,7 @@ public class Fragment_home extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit1.create(JsonPlaceHolderApi.class);
-                Call<Map<String, String>> call = jsonPlaceHolderApi.getPosts("baekkoji");
+                Call<Map<String, String>> call = jsonPlaceHolderApi.getPosts("comehome");
                 // id 임의로!
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
@@ -133,6 +133,7 @@ public class Fragment_home extends Fragment {
                         outRain.append(content);
 
                         content="";
+
                         if(Integer.parseInt(posts.get("sky")) >= 0 && Integer.parseInt(posts.get("sky")) <= 5){ //하늘 상태 전운량
                             content+="맑음";
                             cast.setImageResource(R.drawable.sun);
@@ -143,9 +144,11 @@ public class Fragment_home extends Fragment {
                         }else if(Integer.parseInt(posts.get("sky")) >= 9 && Integer.parseInt(posts.get("sky")) <= 10){
                             content+="흐림";
                             cast.setImageResource(R.drawable.blur);
+                        } else{
+                            content+="날씨 등급 산정 중";
                         }
-                        outWeather.append(content);
 
+                        outWeather.append(content);
 
                         content = "";
                         if (Integer.parseInt(posts.get("pmGrade")) == 1) {//실내 미세먼지 등급

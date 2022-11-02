@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ComeHome.DTO.ControlDataInfo;
+import com.example.ComeHome.Interface.JsonPlaceHolderApi;
 import com.example.ComeHome.Interface.PostApi;
+import com.example.ComeHome.Interface.ShowControlDataApi;
 import com.example.ComeHome.R;
 import com.example.ComeHome.Retrofit.RetrofitService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,6 +57,59 @@ public class Fragment_control extends Fragment {
         EditText editText2 = (EditText)viewGroup.findViewById(R.id.editTextNumber2); //난방 온도
         EditText editText3 = (EditText)viewGroup.findViewById(R.id.editTextNumber3); //냉방 온도
         EditText editText4 = (EditText) viewGroup.findViewById(R.id.editTextpw); //도어락 비밀번호
+
+
+        Gson gson = new GsonBuilder().setLenient().create();
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        ShowControlDataApi showControlDataApi = retrofit1.create(ShowControlDataApi.class);
+        Call<Map<String, String>> call = showControlDataApi.getPosts();
+
+        call.enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                Map<String, String> posts = new HashMap<>();
+
+                posts = response.body();
+                String content = "";
+
+                if(posts.get("angle").equals("0")){
+                    editText.setText(null);
+                }else{
+                    content+=posts.get("angle") + "°";
+                    editText.setText(content);
+                }
+
+                content = "";
+                if(posts.get("ac_temp").equals("0")){
+                    editText2.setText(null);
+                }else{
+                    content+=posts.get("ac_temp") + "°C";
+                    editText2.setText(content);
+                }
+
+                content = "";
+                if(posts.get("heater_temp").equals("0")){
+                    editText2.setText(null);
+                }else{
+                    content+=posts.get("heater_temp") + "°C";
+                    editText2.setText(content);
+                }
+            }
+            //DB 읽어오는 구문 (제어 데이터)
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                return;
+            }
+        });
 
         //창문
         Button button1 = viewGroup.findViewById(R.id.button1);
@@ -176,7 +239,7 @@ public class Fragment_control extends Fragment {
                             result = response.body();
                             if(result != null){
                                 Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                editText.setText(null);
+                                //editText.setText(null);
 
                             }else{
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
@@ -192,7 +255,7 @@ public class Fragment_control extends Fragment {
                 }
             }else{
                 //다시 입력 메시지 출력
-                String msg = "다시 입력해주십시오. (입력 범위 : 1°~90°)";
+                String msg = "다시 입력해주십시오. (입력 범위 : 1°~180°)";
                 Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
             }
         }
@@ -230,7 +293,7 @@ public class Fragment_control extends Fragment {
                             result = response.body();
                             if(result != null){
                                 Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                editText.setText(null);
+                                //editText.setText(null);
                             }else{
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
                             }
@@ -283,7 +346,7 @@ public class Fragment_control extends Fragment {
                             result = response.body();
                             if(result != null){
                                 Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                editText.setText(null);
+                                //editText.setText(null);
                             }else{
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
                             }
