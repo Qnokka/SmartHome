@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.smarthome0807"
+        applicationId "com.example.ComeHome"
         minSdk 21
         targetSdk 32
         versionCode 1
