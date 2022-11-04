@@ -113,24 +113,24 @@ public class Fragment_home extends Fragment {
                         String content2 = "";
 
                         content += posts.get("temp") + "°C";
-                        inTemp.append(content);
+                        inTemp.setText(content);
 
                         content = "";
                         content += posts.get("humid") + "%";
-                        inHumid.append(content);
+                        inHumid.setText(content);
 
                         content = "";
                         content += posts.get("API_temp") + "°C";
-                        outTemp.append(content);
+                        outTemp.setText(content);
 
                         content = "";
                         content += posts.get("API_humid") + "%";
-                        outHumid.append(content);
+                        outHumid.setText(content);
 
 
                         content ="";
                         content+=posts.get("pop")+"%"; //강수확률
-                        outRain.append(content);
+                        outRain.setText(content);
 
                         content="";
 
@@ -148,7 +148,7 @@ public class Fragment_home extends Fragment {
                             content+="날씨 등급 산정 중";
                         }
 
-                        outWeather.append(content);
+                        outWeather.setText(content);
 
                         content = "";
                         if (Integer.parseInt(posts.get("pmGrade")) == 1) {//실내 미세먼지 등급
@@ -172,8 +172,8 @@ public class Fragment_home extends Fragment {
                             content2+= posts.get("pm") + "㎍/㎥";
                             dust.setImageResource(R.drawable.bad);
                         }
-                        inPm10.append(content);
-                        inPm25.append(content2);
+                        inPm10.setText(content);
+                        inPm25.setText(content2);
 
                         content = "";
                         content2 = "";
@@ -198,14 +198,14 @@ public class Fragment_home extends Fragment {
                             content += "등급 산정 중";
                             content2+= posts.get("API_PM") + "㎍/㎥";
                         }
-                        outPm10.append(content);
-                        outPm25.append(content2);
+                        outPm10.setText(content);
+                        outPm25.setText(content2);
 
                         //사용자 구 얻어오는 구문
                         content = posts.get("address");
                         Log.d("result", "값 :"+content);
-                        local.append(content);
-                        local2.append(content);
+                        local.setText("서울특별시 "+content);
+                        local2.setText("서울특별시 "+content);
                     }
                     //DB 읽어오는 구문 (실내외 온습도 및 미세먼지 정보)
 

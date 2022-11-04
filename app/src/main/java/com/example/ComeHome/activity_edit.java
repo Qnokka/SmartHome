@@ -69,6 +69,7 @@ public class activity_edit extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         UserData userData = retrofit1.create(UserData.class);
+        //추후 세션 관리 적용 : 사용자 아이디 정보 가져오기
         Call<Map<String, String>> call = userData.getPosts("comehome");
         call.enqueue(new Callback<Map<String, String>>() {
             @Override

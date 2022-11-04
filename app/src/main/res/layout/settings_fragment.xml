@@ -56,29 +56,11 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/SmartHomeInfoInsert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00ffffff"
-                android:text="스마트홈 등록"
-                android:textColor="@color/purple_500"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/SmartHomeInfoEdit"
+                android:id="@+id/SmartHomeInfoIChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00ffffff"
                 android:text="스마트홈 변경"
-                android:textColor="@color/purple_500"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/SmartHomeInfoDel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00ffffff"
-                android:text="스마트홈 삭제"
                 android:textColor="@color/purple_500"
                 android:textSize="16sp" />
 

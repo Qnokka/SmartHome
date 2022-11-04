@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class activity_login extends AppCompatActivity {
 
     private String url = "http://10.0.2.2:8081";
-    //Users table에 저장된 id, password 값
+    //Users 테이블에 저장된 id, password 값 저장할 변수
     String user_id;
     String user_pw;
 
@@ -65,7 +65,7 @@ public class activity_login extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 UserData userData = retrofit1.create(UserData.class);
-                Call<Map<String, String>> call = userData.getPosts("comehome");
+                Call<Map<String, String>> call = userData.getPosts(input_id);
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
