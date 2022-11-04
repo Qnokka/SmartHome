@@ -39,6 +39,7 @@ public class activity_delete extends AppCompatActivity {
     private AlertDialog dialog;
     Users users = new Users();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
