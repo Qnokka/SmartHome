@@ -16,6 +16,7 @@ import com.example.ComeHome.R;
 import com.example.ComeHome.activity_delete;
 import com.example.ComeHome.activity_edit;
 import com.example.ComeHome.activity_login;
+import com.example.ComeHome.activity_smarthome_change;
 
 public class Fragment_settings extends Fragment {
     ViewGroup viewGroup;
@@ -55,6 +56,17 @@ public class Fragment_settings extends Fragment {
                 startActivity(intent);
             }
         });
+
+        Button btn4 = (Button) viewGroup.findViewById(R.id.SmartHomeInfoIChange);
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), activity_smarthome_change.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+
         return viewGroup;
     }
 }
