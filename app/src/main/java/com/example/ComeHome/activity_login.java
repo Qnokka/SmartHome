@@ -28,6 +28,7 @@ public class activity_login extends AppCompatActivity {
     String user_id;
     String user_pw;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,30 +88,27 @@ public class activity_login extends AppCompatActivity {
                         content += posts.get("passwd");
                         user_pw = content;
 
+                        if(len_id.getBytes().length <= 0 || len_pw.getBytes().length <= 0){
+                            String msg = "모두 입력해주세요.";
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        } else {
+                            if(input_id.equals(user_id) && input_pw.equals(user_pw)){
+                                //화면 이동 구문
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(intent);
+                            }else{
+                                String msg = "비밀번호 또는 아이디가 일치하지 않습니다.";
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
-
                     @Override
                     public void onFailure(Call<Map<String, String>> call, Throwable t) {
 
                     }
                 });
-                //end of 사용자 정보 Get 구문
-
-                if(len_id.getBytes().length <= 0 || len_pw.getBytes().length <= 0){
-                    String msg = "모두 입력해주세요.";
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                }else{
-                    if(input_id.equals(user_id) && (input_pw.equals(user_pw))){
-                        //화면 이동 구문
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        String msg = "비밀번호 또는 아이디가 일치하지 않습니다.";
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    }
-                }
-
             }
+            //end of onClick Method
         });
     }
 
