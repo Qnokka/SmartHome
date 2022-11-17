@@ -9,4 +9,5 @@ import retrofit2.http.POST;
 public interface JsonPlaceHolderApi {
     @POST("/api/main/getDatas")
     Call<Map<String,String>> getPosts(@Body String UserId);
+
 }

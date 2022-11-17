@@ -5,16 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ComeHome.DAO.Fragment_home;
-import com.example.ComeHome.DAO.Fragment_settings;
 import com.example.ComeHome.DTO.Users;
 import com.example.ComeHome.Interface.EditUserData;
 import com.example.ComeHome.Interface.UserData;
@@ -24,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,8 +65,7 @@ public class activity_edit extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         UserData userData = retrofit1.create(UserData.class);
-        //추후 세션 관리 적용 : 사용자 아이디 정보 가져오기
-        Call<Map<String, String>> call = userData.getPosts("comehome");
+        Call<Map<String, String>> call = userData.getPosts();
         call.enqueue(new Callback<Map<String, String>>() {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
@@ -113,7 +108,6 @@ public class activity_edit extends AppCompatActivity {
                 edit_id.setText(t.getMessage());
             }
         });
-        //end of 사용자 정보 Get 구문
 
         //수정 버튼 클릭 시 수행
         edit_yes = findViewById(R.id.edit_yes);

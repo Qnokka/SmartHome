@@ -56,8 +56,7 @@ public class activity_delete extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         UserData userData = retrofit1.create(UserData.class);
-        //추후 세션 관리 적용 : 사용자 아이디 정보 가져오기
-        Call<Map<String, String>> call = userData.getPosts("comehome");
+        Call<Map<String, String>> call = userData.getPosts();
         call.enqueue(new Callback<Map<String, String>>() {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
