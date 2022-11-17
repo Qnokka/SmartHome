@@ -93,8 +93,8 @@ public class Fragment_home extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit1.create(JsonPlaceHolderApi.class);
-                Call<Map<String, String>> call = jsonPlaceHolderApi.getPosts("comehome");
-                // id 임의로!
+                Call<Map<String, String>> call = jsonPlaceHolderApi.getPosts();
+
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
@@ -129,23 +129,31 @@ public class Fragment_home extends Fragment {
 
 
                         content ="";
-                        content+=posts.get("pop")+"%"; //강수확률
+                        if(posts.get("pop") == null){
+                            content+="산정 중";
+                        }else{
+                            content+=posts.get("pop")+"%"; //강수확률
+                        }
                         outRain.setText(content);
 
                         content="";
 
-                        if(Integer.parseInt(posts.get("sky")) >= 0 && Integer.parseInt(posts.get("sky")) <= 5){ //하늘 상태 전운량
-                            content+="맑음";
-                            cast.setImageResource(R.drawable.sun);
-
-                        }else if(Integer.parseInt(posts.get("sky")) >= 6 && Integer.parseInt(posts.get("sky")) <= 8){
-                            content+="구름 많음";
-                            cast.setImageResource(R.drawable.cloud);
-                        }else if(Integer.parseInt(posts.get("sky")) >= 9 && Integer.parseInt(posts.get("sky")) <= 10){
-                            content+="흐림";
-                            cast.setImageResource(R.drawable.blur);
-                        } else{
+                        if(posts.get("sky") == null){
                             content+="날씨 등급 산정 중";
+                        } else{
+                            if(Integer.parseInt(posts.get("sky")) >= 0 && Integer.parseInt(posts.get("sky")) <= 5){ //하늘 상태 전운량
+                                content+="맑음";
+                                cast.setImageResource(R.drawable.sun);
+
+                            }else if(Integer.parseInt(posts.get("sky")) >= 6 && Integer.parseInt(posts.get("sky")) <= 8){
+                                content+="구름 많음";
+                                cast.setImageResource(R.drawable.cloud);
+                            }else if(Integer.parseInt(posts.get("sky")) >= 9 && Integer.parseInt(posts.get("sky")) <= 10){
+                                content+="흐림";
+                                cast.setImageResource(R.drawable.blur);
+                            } else {
+                                content+="날씨 등급 산정 중";
+                            }
                         }
 
                         outWeather.setText(content);

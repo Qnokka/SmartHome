@@ -7,7 +7,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface JsonPlaceHolderApi {
-    @POST("/api/main/getDatas")
-    Call<Map<String,String>> getPosts(@Body String UserId);
-
+    @POST("/api/main/getData")
+    Call<Map<String,String>> getPosts();
 }
