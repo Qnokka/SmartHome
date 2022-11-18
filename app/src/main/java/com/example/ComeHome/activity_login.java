@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class activity_login extends AppCompatActivity {
 
     private String url = "http://10.0.2.2:8081";
+    //수정 사항 반영
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
