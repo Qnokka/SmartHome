@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface CheckUserApi {
+
     @POST("/api/users/login")
     Call<Boolean> getUserResult(@Body Map<String, String> users);
 }

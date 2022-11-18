@@ -37,6 +37,7 @@ public class activity_delete extends AppCompatActivity {
     private  EditText del_passwd;
     private Button del_yes;
     private AlertDialog dialog;
+
     Users users = new Users();
 
     @Override

@@ -40,6 +40,7 @@ public class activity_edit extends AppCompatActivity {
     private AlertDialog dialog;
     private Button edit_yes;
     private String old_name, old_passwd, old_address, old_addressDetail; //변경 전 값 저장할 변수
+
     Fragment_home fragment_home;
 
     @Override

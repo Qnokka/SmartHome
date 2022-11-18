@@ -33,6 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment_home extends Fragment {
+
     ViewGroup viewGroup;
     private String url = "http://10.0.2.2:8081";
 
