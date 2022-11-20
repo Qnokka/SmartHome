@@ -24,6 +24,7 @@ import com.example.ComeHome.Retrofit.RetrofitService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -229,20 +230,21 @@ public class Fragment_control extends Fragment {
                     call1.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            System.out.println(response.message());
-
-                            if (!response.isSuccessful()) {
-                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                            ResponseBody result;
-                            result = response.body();
-                            if(result != null){
-                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                //editText.setText(null);
-
-                            }else{
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                            try {
+                                int result = Integer.parseInt(response.body().string());
+                                switch (result){
+                                    case 1 :
+                                        Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 3 :
+                                        Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    default:
+                                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                         @Override
@@ -283,19 +285,24 @@ public class Fragment_control extends Fragment {
                     call1.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            System.out.println(response.message());
-
-                            if (!response.isSuccessful()) {
-                                Toast.makeText(getContext(), "냉난방기는 동시 운용 불가합니다", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                            ResponseBody result;
-                            result = response.body();
-                            if(result != null){
-                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                //editText.setText(null);
-                            }else{
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                            try {
+                                int result = Integer.parseInt(response.body().string());
+                                switch (result){
+                                    case 1 :
+                                        Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2 :
+                                        Toast.makeText(getContext(), "냉난방기는 동시 운용 불가합니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 3 :
+                                        Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    default:
+                                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                         @Override
@@ -326,6 +333,7 @@ public class Fragment_control extends Fragment {
                 try {
                     controlDataInfo.setAc_temp(num);
                     controlDataInfo.setAc(1);
+
                     //모듈화 코드로 수정해야 함 (에러 없는 오류)
                     Retrofit retrofit2 = new Retrofit.Builder()
                             .baseUrl(url)
@@ -336,19 +344,24 @@ public class Fragment_control extends Fragment {
                     call1.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            System.out.println(response.message());
-
-                            if (!response.isSuccessful()) {
-                                Toast.makeText(getContext(), "냉난방기는 동시 운용 불가합니다", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                            ResponseBody result;
-                            result = response.body();
-                            if(result != null){
-                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                                //editText.setText(null);
-                            }else{
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                            try {
+                                int result = Integer.parseInt(response.body().string());
+                                switch (result){
+                                    case 1 :
+                                        Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2 :
+                                        Toast.makeText(getContext(), "냉난방기는 동시 운용 불가합니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 3 :
+                                        Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    default:
+                                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                         @Override
@@ -381,18 +394,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -419,18 +435,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -467,24 +486,24 @@ public class Fragment_control extends Fragment {
                 call1.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        System.out.println(response.message());
-
-                        if (!response.isSuccessful()) {
-                            editText.setText(String.valueOf(response.code()));
-                            Toast.makeText(v.getContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        ResponseBody result;
-                        result = response.body();
-                        if (result != null) {
-                            Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                            editText.setText(null);
-
-                        } else {
-                            Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                        try {
+                            int result = Integer.parseInt(response.body().string());
+                            switch (result){
+                                case 1 :
+                                    Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                    editText.setText(null);
+                                    break;
+                                case 3 :
+                                    Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(getContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Toast.makeText(v.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
@@ -513,18 +532,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -551,18 +573,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -589,18 +614,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -627,18 +655,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -665,18 +696,21 @@ public class Fragment_control extends Fragment {
             call1.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    System.out.println(response.message());
-
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    ResponseBody result;
-                    result = response.body();
-                    if(result != null){
-                        Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                    try {
+                        int result = Integer.parseInt(response.body().string());
+                        switch (result){
+                            case 1 :
+                                Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3 :
+                                Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "원격 제어 요청 실패하였습니다.", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 @Override
@@ -710,21 +744,22 @@ public class Fragment_control extends Fragment {
                 call1.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        System.out.println(response.message());
-
-                        if (!response.isSuccessful()) {
-                            editText.setText(String.valueOf(response.code()));
-                            Toast.makeText(v.getContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        ResponseBody result;
-                        result = response.body();
-                        if (result != null) {
-                            Toast.makeText(v.getContext(), "원격 제어 요청 완료되었습니다", Toast.LENGTH_LONG).show();
-                            editText.setText(null);
-
-                        } else {
-                            Toast.makeText(v.getContext(), "Error", Toast.LENGTH_LONG).show();
+                        try {
+                            int result = Integer.parseInt(response.body().string());
+                            switch (result){
+                                case 1 :
+                                    Toast.makeText(getContext(), "원격 제어 요청 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                    editText.setText(null);
+                                    break;
+                                case 3 :
+                                    Toast.makeText(getContext(), "미사용 기기로 등록되어있습니다.\n기기 사용 등록을 해주세요.", Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(getContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
 
