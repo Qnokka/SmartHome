@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Fragment_home extends Fragment {
 
     ViewGroup viewGroup;
-    private String url = "http://10.0.2.2:8081";
+    private String url = "http://3.39.194.213:8081";
 
     //현재 사용자 위치 정보 변수
     private TextView local;         //실외 하단 위치

@@ -40,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Fragment_control extends Fragment {
     ViewGroup viewGroup;
 
-    private String url = "http://10.0.2.2:8081";
+    private String url = "http://3.39.194.213:8081";
     private Button m_btnAlert; //팝업 알림
     //context 추가
 

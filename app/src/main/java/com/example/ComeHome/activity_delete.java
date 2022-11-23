@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_delete extends AppCompatActivity {
 
-    private final String url = "http://10.0.2.2:8081";
+    private final String url = "http://3.39.194.213:8081";
     private TextView del_id;
     private TextView del_name;
     private  EditText del_passwd;
