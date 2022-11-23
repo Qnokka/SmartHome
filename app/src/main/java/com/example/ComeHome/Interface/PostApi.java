@@ -10,4 +10,5 @@ import retrofit2.http.POST;
 public interface PostApi {
     @POST("api/home/Control")
     Call<ResponseBody> getControlResult(@Body ControlDataInfo controlData);
+
 }
