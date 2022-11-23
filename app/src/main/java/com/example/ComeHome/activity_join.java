@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_join extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8081";
+    private String url = "http://3.39.194.213:8081";
     private EditText join_id, join_pw, join_name, join_apt, join_adr, join_key;
     private Button join_yes, checkId;
     private AlertDialog dialog;

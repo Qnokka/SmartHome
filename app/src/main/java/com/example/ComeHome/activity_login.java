@@ -23,8 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_login extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8081";
-
+    //private String url = "http://10.0.2.2:8081";
+    private String url = "http://3.39.194.213:8081";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

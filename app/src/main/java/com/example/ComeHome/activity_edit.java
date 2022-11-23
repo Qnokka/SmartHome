@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_edit extends AppCompatActivity {
 
-    private final String url = "http://10.0.2.2:8081";
+    private final String url = "http://3.39.194.213:8081";
     private TextView edit_id;
     private EditText edit_name;
     private EditText edit_current_passwd;
