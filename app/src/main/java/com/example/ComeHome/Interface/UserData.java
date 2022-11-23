@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface UserData {
+
     @POST("/api/users/getUsers")
-    Call<Map<String,String>> getPosts(@Body String UserId);
+    Call<Map<String,String>> getPosts();
 }

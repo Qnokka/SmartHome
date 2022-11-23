@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.ComeHome.Interface.UserData;
+import com.example.ComeHome.Interface.CheckUserApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,11 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_login extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8081";
-    //Users 테이블에 저장된 id, password 값 저장할 변수
-    String user_id;
-    String user_pw;
-
+    //private String url = "http://10.0.2.2:8081";
+    private String url = "http://3.39.194.213:8081";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,60 +54,45 @@ public class activity_login extends AppCompatActivity {
                 String len_id = input_id.trim();
                 String len_pw = input_pw.trim();
 
-                //사용자 정보 가져오는 구문
                 Gson gson = new GsonBuilder().setLenient().create();
 
                 Retrofit retrofit1 = new Retrofit.Builder()
                         .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
-                UserData userData = retrofit1.create(UserData.class);
-                Call<Map<String, String>> call = userData.getPosts(input_id);
-                call.enqueue(new Callback<Map<String, String>>() {
+
+                Map<String, String> users = new HashMap<>();
+                users.put("id", input_id);
+                users.put("passwd", input_pw);
+
+                CheckUserApi checkUserApi = retrofit1.create(CheckUserApi.class);
+                Call<Boolean> call = checkUserApi.getUserResult(users);
+                call.enqueue(new Callback<Boolean>() {
                     @Override
-                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                        if (!response.isSuccessful()) {
-                            String msg = "Error" + response.code();
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                        if(len_id.getBytes().length <= 0 || len_pw.getBytes().length <= 0){
+                            String msg = "모두 입력해주세요.";
                             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                            return;
+                        }else{
+                            if (response.body() == true) {
+                                //화면 이동 구문
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                String msg = "비밀번호 또는 아이디가 일치하지 않습니다.";
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                            }
                         }
-
-                        Map<String, String> posts = new HashMap<>();
-
-                        posts = response.body();
-                        String content = "";
-
-                        content += posts.get("id");
-                        user_id = content;
-
-                        content = "";
-                        content += posts.get("passwd");
-                        user_pw = content;
-
                     }
 
                     @Override
-                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                    public void onFailure(Call<Boolean> call, Throwable t) {
 
                     }
                 });
-                //end of 사용자 정보 Get 구문
-
-                if(len_id.getBytes().length <= 0 || len_pw.getBytes().length <= 0){
-                    String msg = "모두 입력해주세요.";
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                }else{
-                    if(input_id.equals(user_id) && (input_pw.equals(user_pw))){
-                        //화면 이동 구문
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        String msg = "비밀번호 또는 아이디가 일치하지 않습니다.";
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    }
-                }
-
             }
+            //end of onClick Method
         });
     }
 

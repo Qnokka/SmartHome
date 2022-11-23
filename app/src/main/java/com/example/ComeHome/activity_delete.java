@@ -31,12 +31,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class activity_delete extends AppCompatActivity {
 
-    private final String url = "http://10.0.2.2:8081";
+    private final String url = "http://3.39.194.213:8081";
     private TextView del_id;
     private TextView del_name;
     private  EditText del_passwd;
     private Button del_yes;
     private AlertDialog dialog;
+
     Users users = new Users();
 
     @Override
@@ -56,8 +57,7 @@ public class activity_delete extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         UserData userData = retrofit1.create(UserData.class);
-        //추후 세션 관리 적용 : 사용자 아이디 정보 가져오기
-        Call<Map<String, String>> call = userData.getPosts("comehome");
+        Call<Map<String, String>> call = userData.getPosts();
         call.enqueue(new Callback<Map<String, String>>() {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
